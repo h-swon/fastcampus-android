@@ -19,11 +19,18 @@ import org.koin.test.KoinTest
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnit
 import org.mockito.junit.MockitoRule
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+
+
+
 
 @ExperimentalCoroutinesApi
-internal class ViewModelTest : KoinTest {
+internal abstract class ViewModelTest : KoinTest {
     @get:Rule
     val mockitoRule: MockitoRule = MockitoJUnit.rule()
+
+    @get: Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
     private lateinit var context: Application

@@ -1,0 +1,11 @@
+package com.swon.todo_app.data.repository
+
+import com.swon.todo_app.data.entity.ToDoEntity
+
+interface ToDoRepository {
+
+    suspend fun getToDoList(): List<ToDoEntity>
+
+    suspend fun insertToDoList(toDoList: List<ToDoEntity>)
+
+}
