@@ -4,6 +4,7 @@ import com.swon.todo_app.data.entity.ToDoEntity
 import com.swon.todo_app.domain.todo.GetToDoItemUseCase
 import com.swon.todo_app.domain.todo.InsertToDoListUseCase
 import com.swon.todo_app.presentation.list.ListViewModel
+import com.swon.todo_app.presentation.list.ToDoListState
 import com.swon.todo_app.viewmodel.ViewModelTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -44,7 +45,9 @@ internal class ListViewModelTest : ViewModelTest() {
         viewModel.fetchData()
         testObservable.assertValueSequence(
             listOf(
-                mockList
+                ToDoListState.UnInitialized,
+                ToDoListState.Loading,
+                ToDoListState.Success(mockList)
             )
         )
     }
@@ -69,7 +72,9 @@ internal class ListViewModelTest : ViewModelTest() {
         viewModel.deleteAll()
         testObservable.assertValueSequence(
             listOf(
-                listOf()
+                ToDoListState.UnInitialized,
+                ToDoListState.Loading,
+                ToDoListState.Success(listOf())
             )
         )
     }
