@@ -37,6 +37,7 @@ internal class ListViewModelTest : ViewModelTest() {
         insertToDoListUseCase(mockList)
     }
 
+    // Test: 입력된 데이터를 잘 불러오는지
     @Test
     fun `test viewModel fetch`(): Unit = runTest {
         val testObservable = viewModel.toDoListLiveData.test()
@@ -48,6 +49,7 @@ internal class ListViewModelTest : ViewModelTest() {
         )
     }
 
+    // Test: 데이터 업데이트 시 잘 반영되는지
     @Test
     fun `test Item update`(): Unit = runTest {
         val todo = ToDoEntity(
@@ -58,5 +60,17 @@ internal class ListViewModelTest : ViewModelTest() {
         )
         viewModel.updateEntity(todo)
         assert(getToDoItemUseCase(todo.id)?.hasCompleted ?: false == todo.hasCompleted)
+    }
+
+    // Test: 데이터 삭제 시 빈 상태로 보이는지
+    @Test
+    fun `test Item Delete All`(): Unit = runTest {
+        val testObservable = viewModel.toDoListLiveData.test()
+        viewModel.deleteAll()
+        testObservable.assertValueSequence(
+            listOf(
+                listOf()
+            )
+        )
     }
 }
